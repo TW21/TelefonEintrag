@@ -35,20 +35,43 @@ public class Telefonliste
     }
     public boolean modifyEntry(String name, String number, String newName, String newNumber) {
 
-        TelefonEintrag neuerEintrag = new TelefonEintrag(newName,newNumber);
-
-        phoneBook.replaceAll(neuerEintrag);
-
-
-
+        TelefonEintrag gefunden = phoneBook.stream()
+                .filter(suchEintrag -> suchEintrag.getName().equals(name) && suchEintrag.getNumber().equals(number))
+                .findFirst()
+                .orElse(null);
+        if (gefunden == null) {
+            return false;
+        }else {
+            gefunden.setNumber(newNumber);
+            gefunden.setName(newName);
+            return true;
+        }
 
     }
     public String searchByName(String name) {
+       TelefonEintrag gefunden = phoneBook.stream()
+                .filter(suchName -> suchName.getName().equals(name))
+                .findFirst()
+                .orElse(null);
+       if (gefunden == null) {
+           return null;
+       }else {
+           return gefunden.toString();
+       }
+
 
     }
 
     public String searchNameByNumber(String number) {
-
+        TelefonEintrag gefunden = phoneBook.stream()
+                .filter(suchNummer -> suchNummer.getNumber().equals(number))
+                .findFirst()
+                .orElse(null);
+        if (gefunden == null) {
+            return null;
+        }else {
+            return gefunden.toString();
+        }
 
     }
 
